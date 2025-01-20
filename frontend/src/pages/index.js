@@ -7,6 +7,7 @@ import UserLogin from "./user/auth/UserLogin.jsx";
 import UserSignup from "./user/auth/UserSignup.jsx";
 import UserLogout from "./user/auth/UserLogout.jsx";
 import UserProtectWrapper from "./user/userProtection/UserProtectWrapper.jsx";
+import Riding from "./user/Riding.jsx";
 
 // driver
 import DriverHome from "./driver/DriverHome.jsx";
@@ -22,6 +23,7 @@ export {
   UserSignup,
   UserLogout,
   UserProtectWrapper,
+  Riding,
   DriverHome,
   DriverLogin,
   DriverSignup,
