@@ -6,6 +6,7 @@ import {
   UserSignup,
   UserLogout,
   UserProtectWrapper,
+  Riding,
   DriverHome,
   DriverLogin,
   DriverSignup,
@@ -18,6 +19,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        {/* User routes */}
         <Route
           path="/home"
           element={
@@ -26,9 +28,10 @@ function App() {
             </UserProtectWrapper>
           }
         />
-        {/* User routes */}
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSignup />} />
+        <Route path="/riding" element={<Riding />} />
+
         <Route
           path="/user/logout"
           element={
