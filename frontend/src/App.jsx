@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import "remixicon/fonts/remixicon.css";
 import {
   LandingPage,
   Home,
@@ -14,6 +15,7 @@ import {
   DriverProtectWrapper,
 } from "./pages/index.js";
 
+import DriverRiding from "./pages/driver/DriverRiding.jsx";
 function App() {
   return (
     <div>
@@ -31,6 +33,7 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/signup" element={<UserSignup />} />
         <Route path="/riding" element={<Riding />} />
+        <Route path="/driver-riding" element={<DriverRiding />} />
 
         <Route
           path="/user/logout"
