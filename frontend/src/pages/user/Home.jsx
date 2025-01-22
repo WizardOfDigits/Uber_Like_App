@@ -159,6 +159,7 @@ function Home() {
           />
         </div>
       </div>
+
       {/* for vehicle option */}
       <div
         ref={vehiclePanelRef}
@@ -178,6 +179,7 @@ function Home() {
         <ConfirmRide
           setConfirmRidePanel={setConfirmRidePanel}
           setVehicleFound={setVehicleFound}
+          setVehiclePanel={setVehiclePanel}
         />
       </div>
 
@@ -194,7 +196,10 @@ function Home() {
         ref={waitingForDriverRef}
         className="bg-white w-full fixed z-10 bottom-0 px-3 py-12 "
       >
-        <WaitingForDriver WaitingForDriver={waitingForDriver} />
+        <WaitingForDriver
+          WaitingForDriver={waitingForDriver}
+          setVehicleFound={setVehicleFound}
+        />
       </div>
     </div>
   );
