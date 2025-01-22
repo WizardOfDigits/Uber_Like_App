@@ -232,7 +232,7 @@ function DriverSignup() {
       </div>
 
       <div>
-        <p className="text-[10px] leading-tight">
+        <p className="text-[10px] leading-tight mt-6">
           By proceeding you agree to our Terms and Conditions and confirm you
           have read our Privacy Policy
         </p>
