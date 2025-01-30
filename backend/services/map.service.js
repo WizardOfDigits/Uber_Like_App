@@ -1,4 +1,5 @@
 import axios from "axios";
+import driverModel from "../models/driver.model.js";
 
 export async function getAddressCoordinate(address) {
   const apiKey = process.env.GOOGLE_MAPS_API;
@@ -9,7 +10,7 @@ export async function getAddressCoordinate(address) {
     if (response.data.status === "OK") {
       const location = response.data.results[0].geometry.location;
       return {
-        ltd: location.lat,
+        lat: location.lat,
         lng: location.lng,
       };
     } else {
@@ -27,7 +28,7 @@ export async function getAddressDistanceTime(origin, destination) {
 
   const apiKey = process.env.GOOGLE_MAPS_API;
 
-  const url = `https://maps.googleapis.com/maps/api/distancematrix/json?origins=${encodeURIComponent(origin)}&destinations=${encodeURIComponent(destination)}&key=${apiKey}`;
+  const url = `https://maps.gomaps.pro/maps/api/distancematrix/json?destinations=${encodeURIComponent(destination)}&origins=${encodeURIComponent(origin)}&key=${apiKey}`;
 
   try {
     const response = await axios.get(url);
@@ -51,18 +52,29 @@ export async function getAutoCompleteSuggestions(input) {
   }
 
   const apiKey = process.env.GOOGLE_MAPS_API;
-  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
-
+  const url = `https://maps.gomaps.pro/maps/api/place/queryautocomplete/json?input=${encodeURIComponent(input)}&key=${apiKey}`;
   try {
     const response = await axios.get(url);
     if (response.data.status === "OK") {
       return response.data.predictions
         .map((prediction) => prediction.description)
-        .filter((value) => value);
+        .filter(Boolean);
     } else {
       throw new Error("Unable to fetch suggestions");
     }
   } catch (err) {
     throw err;
   }
+}
+export async function getDriversInRadius(lat, lng, radius) {
+  // radius in km
+
+  const drivers = await driverModel.find({
+    location: {
+      $geoWithin: {
+        $centerSphere: [[lng, lat], raidus / 3963.2],
+      },
+    },
+  });
+  return drivers;
 }
