@@ -1,6 +1,7 @@
 import {
   getAddressCoordinate,
   getAddressDistanceTime,
+  getAutoCompleteSuggestions as fetchSuggestions,
 } from "../services/map.service.js";
 import { validationResult } from "express-validator";
 
@@ -38,20 +39,31 @@ export const getDistanceTime = async (req, res, next) => {
 
 export const getAutoCompleteSuggestions = async (req, res, next) => {
   try {
-  } catch (error) {
-    try {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-      }
-
-      const { input } = req.query;
-
-      const suggestions = await mapService.getAutoCompleteSuggestions(input);
-
-      res.status(200).json(suggestions);
-    } catch (err) {
-      res.status(500).json({ message: "Internal server error" });
+    // Validate input query parameters
+    if (!req.query || !req.query.input) {
+      return res
+        .status(400)
+        .json({ message: "The 'input' query parameter is required." });
     }
+
+    const { input } = req.query;
+
+    // Call the service function to fetch suggestions
+    const suggestions = await fetchSuggestions(input);
+
+    // Respond with the suggestions
+    res.status(200).json(suggestions);
+  } catch (err) {
+    console.error("Error in getAutoCompleteSuggestions:", err);
+
+    // Handle specific service errors
+    if (err.message === "query is required") {
+      return res
+        .status(400)
+        .json({ message: "The 'input' query parameter is required." });
+    }
+
+    // Respond with a generic server error
+    res.status(500).json({ message: "Internal server error" });
   }
 };
