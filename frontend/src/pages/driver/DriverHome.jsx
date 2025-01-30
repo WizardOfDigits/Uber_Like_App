@@ -1,10 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import DriverDetails from "../../components/DriverDetails";
 import RidePopup from "../../components/RidePopup";
 import ConfirmRidePopup from "../../components/ConfirmRidePopup.jsx";
+import { SocketContext } from "../../context/SocketContext.jsx";
+import { DriverDataContext } from "../../context/DriverContext.jsx";
 
 function DriverHome() {
   const [ridePopupPanel, setRidePopupPanel] = useState(true);
@@ -12,6 +14,38 @@ function DriverHome() {
 
   const ridePopupPanelRef = useRef(null);
   const confirmRidePopupPanelRef = useRef(null);
+
+  const { socket } = useContext(SocketContext);
+  const { driver } = useContext(DriverDataContext);
+
+  useEffect(() => {
+    socket.emit("join", {
+      userId: driver._id,
+      userType: "driver",
+    });
+
+    const updateLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          socket.emit("update-location-driver", {
+            userId: driver._id,
+            location: {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            },
+          });
+        });
+      }
+    };
+
+    const locationInterval = setInterval(updateLocation, 10000);
+    updateLocation();
+  }, []);
+
+  socket.on("new-ride", (data) => {
+    console.log("new-ride", data);
+    // setConfirmRidePopupPanel(true)
+  });
 
   // popup animation
   useGSAP(() => {
