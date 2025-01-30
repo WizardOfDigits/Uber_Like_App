@@ -18,6 +18,10 @@ const rideSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  vehicleType: {
+    type: String,
+    required: true,
+  },
   fare: {
     type: Number,
     required: true,
