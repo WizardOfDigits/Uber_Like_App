@@ -17,7 +17,8 @@ function VehiclePanel(props) {
       <div
         className="w-full flex items-center justify-between p-3 border-2 active:border-black  rounded-xl mb-2"
         onClick={() => {
-          props.setConfirmRidePanel(true);
+          props.setconfirmridepanel(true);
+          props.selectvehicle("car");
         }}
       >
         <img
@@ -32,12 +33,12 @@ function VehiclePanel(props) {
               <i className="ri-user-fill"></i>4
             </span>
           </h4>
-          <h5 className="font-medium text-base">2 mins away</h5>
+          <h5 className="font-medium text-base">2 min away</h5>
           <p className="font-medium text-xs text-gray-600">
             Affordable compact rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">NRS.300.00</h2>
+        <h2 className="text-xl font-semibold">NRS.{props.fare.car}</h2>
       </div>
 
       {/* motorbike */}
@@ -45,6 +46,7 @@ function VehiclePanel(props) {
         className="w-full flex items-center justify-between p-3 border-2 active:border-black rounded-xl mb-2"
         onClick={() => {
           props.setConfirmRidePanel(true);
+          props.selectVehicle("motrobike");
         }}
       >
         <img
@@ -64,7 +66,7 @@ function VehiclePanel(props) {
             Affordable moto rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">NRS.100.00</h2>
+        <h2 className="text-xl font-semibold">NRS.{props.fare.motorcycle}</h2>
       </div>
 
       {/* bullcart */}
@@ -91,7 +93,7 @@ function VehiclePanel(props) {
             Affordable oldfashion rides
           </p>
         </div>
-        <h2 className="text-xl font-semibold">NRS.30.00</h2>
+        <h2 className="text-xl font-semibold">NRS.{props.fare.bullcart}</h2>
       </div>
     </div>
   );
