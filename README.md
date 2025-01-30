@@ -27,8 +27,8 @@ This is a ride-hailing application that allows users to request rides and driver
 <details>
   <summary>Click to view Auth Section image</summary>
   <div style="display: flex; justify-content: space-around; gap: 20px;">
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/login_page.png?raw=true" alt="Auth Section" width="30%" style="height: 600px; object-fit: cover;" />
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/signup_page.png?raw=true" alt="Auth Section" width="30%" style="height: 600px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/login_page.png?raw=true" alt="Auth Section" width="30%" style="height: 400px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/signup_page.png?raw=true" alt="Auth Section" width="30%" style="height: 400px; object-fit: cover;" />
   </div>
 </details>
 
@@ -36,9 +36,9 @@ This is a ride-hailing application that allows users to request rides and driver
 <details>
   <summary>Click to view Home Page image</summary>
   <div style="display: flex; justify-content: space-around; gap: 20px;">
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/home_page.png?raw=true" alt="Home Page" width="30%" style="height: 600px; object-fit: cover;" />
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/find-ride.png?raw=true" alt="Home Page" width="30%" style="height: 600px; object-fit: cover;" />
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/choose-vehicle.png?raw=true" alt="Home Page" width="30%" style="height: 600px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/home_page.png?raw=true" alt="Home Page" width="30%" style="height: 400px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/find-ride.png?raw=true" alt="Home Page" width="30%" style="height: 400px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/choose-vehicle.png?raw=true" alt="Home Page" width="30%" style="height: 400px; object-fit: cover;" />
   </div>
 </details>
 
@@ -46,9 +46,9 @@ This is a ride-hailing application that allows users to request rides and driver
 <details>
   <summary>Click to view Profile Section image</summary>
   <div style="display: flex; justify-content: space-around; gap: 20px;">
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/new-ride-notification.png?raw=true" alt="Profile Section" width="30%" style="height: 600px; object-fit: cover;" />
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/confirm-ride.png?raw=true" alt="Profile Section" width="30%" style="height: 600px; object-fit: cover;" />
-    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/finish-ride-notification.png?raw=true" alt="Profile Section" width="30%" style="height: 600px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/new-ride-notification.png?raw=true" alt="Profile Section" width="30%" style="height: 400px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/confirm-ride.png?raw=true" alt="Profile Section" width="30%" style="height: 400px; object-fit: cover;" />
+    <img src="https://github.com/WizardOfDigits/Uber_Like_App/blob/main/project_images/finish-ride-notification.png?raw=true" alt="Profile Section" width="30%" style="height: 400px; object-fit: cover;" />
   </div>
 </details>
 
