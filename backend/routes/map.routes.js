@@ -18,7 +18,7 @@ router.get(
 
 router.get(
   "/get-distance-time",
-  query("origing").isString().isLength({ min: 3 }),
+  query("origin").isString().isLength({ min: 3 }),
   query("destination").isString().isLength({ min: 3 }),
   authUser,
   getDistanceTime,
