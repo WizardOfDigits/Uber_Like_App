@@ -577,3 +577,313 @@ Authorization: Bearer JWT_TOKEN_STRING
    - Proper validation errors are returned for invalid inputs
    - Authentication errors are properly handled
    - Duplicate email registration is prevented
+
+# Ride API Documentation
+
+## Create Ride
+
+Create a new ride request.
+
+### Endpoint
+
+```
+POST /rides
+```
+
+### Request Body
+
+```json
+{
+  "pickup": "string",
+  "destination": "string",
+  "vehicleType": "string"
+}
+```
+
+### Headers Required
+
+```
+Authorization: Bearer JWT_TOKEN_STRING
+```
+
+### Success Response
+
+**Status Code**: 201 Created
+
+```json
+{
+  "ride": {
+    "userId": "string",
+    "pickup": "string",
+    "destination": "string",
+    "vehicleType": "string",
+    "status": "string"
+  }
+}
+```
+
+### Error Responses
+
+#### Invalid Input
+
+**Status Code**: 400 Bad Request
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid input",
+      "param": "pickup",
+      "location": "body"
+    }
+  ]
+}
+```
+
+## Get Fare Estimate
+
+Get an estimated fare for a ride.
+
+### Endpoint
+
+```
+GET /rides/fare
+```
+
+### Query Parameters
+
+```
+pickup: string
+destination: string
+```
+
+### Headers Required
+
+```
+Authorization: Bearer JWT_TOKEN_STRING
+```
+
+### Success Response
+
+**Status Code**: 200 OK
+
+```json
+{
+  "estimatedFare": "number",
+  "currency": "string"
+}
+```
+
+### Error Responses
+
+#### Invalid Input
+
+**Status Code**: 400 Bad Request
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid location",
+      "param": "pickup",
+      "location": "query"
+    }
+  ]
+}
+```
+
+### Security Features
+
+- All endpoints require authentication via JWT token
+- Input validation is performed on all parameters
+- Error handling follows consistent patterns
+- Protected against unauthorized access
+
+### General Notes
+
+1. **Authentication:**
+
+   - All routes require valid JWT token
+   - Token must be included in Authorization header
+
+2. **Input Validation:**
+
+   - Address inputs require minimum 3 characters
+   - All location parameters are validated
+   - Proper error messages for invalid inputs
+
+3. **Error Handling:**
+
+   - Consistent error response format
+   - Appropriate HTTP status codes
+   - Detailed error messages for debugging
+
+4. **Rate Limiting:**
+   - Consider implementing rate limiting for map API endpoints
+   - Protect against excessive API usage
+
+# Map API Documentation
+
+## Get Coordinates
+
+Convert an address into geographic coordinates.
+
+### Endpoint
+
+```
+GET /map/get-coordinates
+```
+
+### Query Parameters
+
+```
+address: string (minimum 3 characters)
+```
+
+### Headers Required
+
+```
+Authorization: Bearer JWT_TOKEN_STRING
+```
+
+### Success Response
+
+**Status Code**: 200 OK
+
+```json
+{
+  "coordinates": {
+    "lat": "number",
+    "lng": "number"
+  }
+}
+```
+
+### Error Responses
+
+#### Invalid Input
+
+**Status Code**: 400 Bad Request
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid address",
+      "param": "address",
+      "location": "query"
+    }
+  ]
+}
+```
+
+#### Coordinates Not Found
+
+**Status Code**: 404 Not Found
+
+```json
+{
+  "message": "Coordinates not found"
+}
+```
+
+## Get Distance and Time
+
+Calculate the distance and estimated travel time between two locations.
+
+### Endpoint
+
+```
+GET /map/get-distance-time
+```
+
+### Query Parameters
+
+```
+origin: string (minimum 3 characters)
+destination: string (minimum 3 characters)
+```
+
+### Headers Required
+
+```
+Authorization: Bearer JWT_TOKEN_STRING
+```
+
+### Success Response
+
+**Status Code**: 200 OK
+
+```json
+{
+  "distance": "string",
+  "duration": "string"
+}
+```
+
+### Error Responses
+
+#### Invalid Input
+
+**Status Code**: 400 Bad Request
+
+```json
+{
+  "errors": [
+    {
+      "msg": "Invalid origin/destination",
+      "param": "origin",
+      "location": "query"
+    }
+  ]
+}
+```
+
+## Get Address Suggestions
+
+Get autocomplete suggestions for a partial address input.
+
+### Endpoint
+
+```
+GET /map/get-suggestions
+```
+
+### Query Parameters
+
+```
+input: string (minimum 3 characters)
+```
+
+### Headers Required
+
+```
+Authorization: Bearer JWT_TOKEN_STRING
+```
+
+### Success Response
+
+**Status Code**: 200 OK
+
+```json
+{
+  "suggestions": [
+    {
+      "address": "string",
+      "placeId": "string"
+    }
+  ]
+}
+```
+
+### Error Responses
+
+#### Missing Input
+
+**Status Code**: 400 Bad Request
+
+```json
+{
+  "message": "The 'input' query parameter is required."
+}
+```

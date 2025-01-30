@@ -26,6 +26,6 @@ app.get("/", (req, res) => {
 app.use("/user", userRoutes);
 app.use("/driver", driverRoutes);
 app.use("/map", mapRoutes);
-app.use("/ride", rideRoutes);
+app.use("/rides", rideRoutes);
 
 export default app;
