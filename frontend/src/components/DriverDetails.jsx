@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { DriverDataContext } from "../context/DriverContext.jsx";
 
 function DriverDetails() {
+  const { driver } = useContext(DriverDataContext);
   return (
     <div>
       <div className="flex items-center justify-between">
@@ -10,7 +12,9 @@ function DriverDetails() {
             alt="userImage"
             className="h-10 w-10 rounded-full object-cover"
           />
-          <h4 className="text-lg font-medium">Testing Name</h4>
+          <h4 className="text-lg font-medium capitalize">
+            {driver.fullName.firstName + " " + driver.fullName.lastName}
+          </h4>
         </div>
         <div>
           <h4 className="text-xl font-semibold">NRS.200.00</h4>
