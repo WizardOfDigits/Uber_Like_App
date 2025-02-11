@@ -1,65 +1,50 @@
-# User API Documentation
+# Backend API Documentation
 
-## Register User
+## Base URL
 
-Register a new user in the system.
+`http://localhost:4000/api/v1`
 
-### Endpoint
+## Authentication
 
+**Header Format**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
 ```
-POST /api/v1/users/register
-```
 
-### Request Body
+## User Management
+
+`POST /api/v1/users/register`
+
+### 1. User Registration
+
+**Endpoint**  
+`POST /users/register`
+
+**Request Format**  
+| Field | Type | Constraints | Description |
+|--------------------|------|-----------------|-------------|
+| fullname.firstname | string | ≥3 characters | Required |
+| fullname.lastname | string | Optional | \_ |
+| email | string | Valid format | Required |
+| password | string | ≥6 characters | Required |
+
+**Response**
 
 ```json
+201 Created
 {
-  "fullName": {
-    "firstName": "string", // Minimum 3 characters
-    "lastName": "string" // optional
-  },
-  "email": "string", // Must be a valid email
-  "password": "string" // Minimum 6 characters required
+  "user": { /* user details */ },
+  "token": "jwt.token.here"
 }
 ```
 
-### Example Request
+#### Error Responses
+
+**Invalid Input**
 
 ```json
-{
-  "fullName": {
-    "firstName": "John",
-    "lastName": "Doe"
-  },
-  "email": "john.doe@example.com",
-  "password": "securepassword123"
-}
-```
-
-### Success Response
-
-**Status Code**: 201 Created
-
-```json
-{
-  "user": {
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com"
-  },
-  "token": "JWT_TOKEN_STRING"
-}
-```
-
-### Error Responses
-
-#### Invalid Input
-
-**Status Code**: 400 Bad Request
-
-```json
+400 Bad Request
 {
   "errors": [
     {
@@ -73,47 +58,29 @@ POST /api/v1/users/register
 
 #### Missing Required Fields
 
-**Status Code**: 400 Bad Request
-
 ```json
+400 Bad Request
 {
   "error": "All fields are required"
 }
 ```
 
-## Login User
+### 2. User Login
 
-Authenticate an existing user and receive a JWT token.
+**Endpoint**
 
-### Endpoint
+`POST /users/login`
 
-```
-POST /api/v1/users/login
-```
+**Request Format**  
+| Field | Type | Constraints | Description |  
+|-------|------|-------------|-------------|  
+| email | string | Valid format | Required |  
+| password | string | ≥6 characters | Required |
 
-### Request Body
-
-```json
-{
-  "email": "string", // Must be a valid email
-  "password": "string" // Minimum 6 characters required
-}
-```
-
-### Example Request
+**Response**
 
 ```json
-{
-  "email": "john.doe@example.com",
-  "password": "securepassword123"
-}
-```
-
-### Success Response
-
-**Status Code**: 200 OK
-
-```json
+200 OK
 {
   "user": {
     "email": "john.doe@example.com"
@@ -124,11 +91,11 @@ POST /api/v1/users/login
 
 ### Error Responses
 
-#### Invalid Credentials
-
-**Status Code**: 401 Unauthorized
+**Invalid Credentials**
 
 ```json
+401 Unauthorized
+
 {
   "error": "Invalid email or password"
 }
@@ -136,9 +103,9 @@ POST /api/v1/users/login
 
 #### Invalid Input
 
-**Status Code**: 400 Bad Request
-
 ```json
+400 Bad Request
+
 {
   "errors": [
     {
@@ -150,67 +117,55 @@ POST /api/v1/users/login
 }
 ```
 
-### Security Features
+**Security Features**
 
-- Password comparison is done securely using bcrypt
-- JWT token is generated upon successful login
-- Password is excluded from response payloads
+- BCrypt password comparison
+- JWT token generation
+- Sensitive data exclusion
 
-### Notes
+**Notes**
 
-- The provided email must exist in the system
-- Passwords are case-sensitive
-- The response includes a JWT token that can be used for authentication
+- Email must be registered
+- Case-sensitive credentials
+- Token valid for 24h
 
-## Get User Profile
+---
 
-Retrieve the profile information of the authenticated user.
+### 3. User Profile
 
-### Endpoint
+**Endpoint**  
+`GET /users/profile`
 
-```
-GET /api/v1/users/profile
-```
+**Headers**
 
-### Headers Required
-
-```
-Authorization: Bearer JWT_TOKEN_STRING
+```http
+Authorization: Bearer <JWT_TOKEN>
 ```
 
-### Success Response
-
-**Status Code**: 200 OK
+**Response**
 
 ```json
+200 OK
 {
-  "user": {
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com"
-  }
+  "user": { /* user details */ },
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Unauthorized Access
-
-**Status Code**: 401 Unauthorized
+**Unauthorized**
 
 ```json
+401 Unauthorized
 {
   "message": "Authentication required"
 }
 ```
 
-#### Invalid Token
-
-**Status Code**: 401 Unauthorized
+**Invalid Token**
 
 ```json
+401 Unauthorized
 {
   "message": "Invalid token"
 }
@@ -222,202 +177,143 @@ Authorization: Bearer JWT_TOKEN_STRING
 - Password is automatically excluded from the response
 - The endpoint only returns the authenticated user's own profile
 
-## Logout User
+---
 
-Logout the currently authenticated user and invalidate their token.
+### 4. User Logout
 
-### Endpoint
+**Endpoint**  
+`GET /users/logout`
 
-```
-GET /api/v1/users/logout
-```
+**Headers**
 
-### Headers Required
-
-```
-Authorization: Bearer JWT_TOKEN_STRING
+```http
+Authorization: Bearer <JWT_TOKEN>
 ```
 
-### Success Response
-
-**Status Code**: 200 OK
+**Response**
 
 ```json
+200 OK
 {
   "message": "Logout successful"
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Unauthorized Access
-
-**Status Code**: 401 Unauthorized
+**Unauthorized Access**
 
 ```json
+401 Unauthorized
+
 {
   "message": "Authentication required"
 }
 ```
 
-### Security Features
+---
 
-- The JWT token is blacklisted upon logout
-- HTTP-only cookie containing the token is cleared
-- Subsequent requests with the same token will be rejected
+**Security Implementation**
 
-### Notes
+- Token blacklisting
+- Cookie invalidation
+- Session termination
 
-- The token can be provided either through cookies or Authorization header
-- After logout, the token cannot be reused and a new login will be required
-- All sessions using the logged-out token will be invalidated
+---
 
-# Driver API Documentation
+## Driver Management
 
-## Register Driver
+### 1. Driver Registration
 
-Register a new driver in the system with vehicle details.
+**Endpoint**
 
-### Endpoint
+`POST /users/register`
 
-```
-POST /api/v1/drivers/register
-```
+**Request Format**  
+| Field | Type | Constraints | Description |  
+|-------|------|-------------|-------------|  
+| fullName.firstName | string | ≥3 characters | Required |  
+| fullName.lastName | string | Optional | - |  
+| email | string | Valid format | Required |  
+| password | string | ≥6 characters | Required |
 
-### Request Body
+**Response**
 
 ```json
+201 Created
 {
-  "fullName": {
-    "firstName": "string", // minimum 3 characters required
-    "lastName": "string" // optional
-  },
-  "email": "string", // Must be a valid email
-  "password": "string", // Minimum 6 characters required
-  "vehicle": {
-    "color": "string", // minimum 3 characters required
-    "plate": "string", // minimum 3 characters required
-    "capacity": "number", // must be an integer greater than or equal to 1
-    "vehicleType": "string" // must be either "car" or "motorcylcle" or "auto"
-  }
+  "user": { /* user details */ },
+  "token": "jwt.token.here"
 }
 ```
 
-### Success Response
+#### Error Responses
 
-**Status Code**: 201 Created
-
-```json
-{
-  "driver": {
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "black",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  },
-  "token": "JWT_TOKEN_STRING"
-}
-```
-
-### Error Responses
-
-#### Driver Already Exists
-
-**Status Code**: 400 Bad Request
+**Existing Driver**
 
 ```json
+400 Bad Request
 {
   "message": "Driver already exists"
 }
 ```
 
-#### Invalid Input
-
-**Status Code**: 400 Bad Request
+**Validation Error**
 
 ```json
+400 Bad Request
 {
   "errors": [
     {
-      "msg": "Invalid Email",
-      "param": "email",
+      "msg": "Invalid vehicleType",
+      "param": "vehicleType",
       "location": "body"
     }
   ]
 }
 ```
 
-## Login Driver
+---
 
-Authenticate an existing driver and receive a JWT token.
+### 2. Driver Login
 
-### Endpoint
+**Endpoint**
 
-```
-POST /api/v1/drivers/login
-```
+`POST /drivers/login`
 
-### Request Body
+**Request Format**  
+| Field | Type | Constraints | Description |  
+|-------|------|-------------|-------------|  
+| email | string | Valid format | Required |  
+| password | string | ≥6 characters | Required |
 
-```json
-{
-  "email": "string",
-  "password": "string"
-}
-```
-
-### Validation Rules
-
-- **email**: Must be a valid email address
-- **password**: Minimum 6 characters required
-
-### Success Response
-
-**Status Code**: 200 OK
+**Success Response**
 
 ```json
+200 OK
 {
-  "driver": {
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "black",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  },
-  "token": "JWT_TOKEN_STRING"
+  "user": { /* authenticated user */ },
+  "token": "new.jwt.token"
 }
 ```
 
 ### Error Responses
 
-#### Invalid Credentials
-
-**Status Code**: 401 Unauthorized
+**Invalid Credentials**
 
 ```json
+401 Unauthorized
+
 {
-  "message": "Invalid email or password"
+  "error": "Invalid email or password"
 }
 ```
 
 #### Invalid Input
 
-**Status Code**: 400 Bad Request
-
 ```json
+400 Bad Request
+
 {
   "errors": [
     {
@@ -429,99 +325,350 @@ POST /api/v1/drivers/login
 }
 ```
 
-## Get Driver Profile
+**Security Features**
 
-Retrieve the profile information of the authenticated driver.
+- BCrypt password comparison
+- JWT token generation
+- Sensitive data exclusion
 
-### Endpoint
+**Notes**
 
+- Email must be registered
+- Case-sensitive credentials
+- Token valid for 24h
+
+---
+
+### 3. Driver Profile
+
+**Endpoint**  
+`GET /drivers/profile`
+
+**Headers**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
 ```
-GET /api/v1/drivers/profile
-```
 
-### Headers Required
-
-```
-Authorization: Bearer JWT_TOKEN_STRING
-```
-
-### Success Response
-
-**Status Code**: 200 OK
+**Response**
 
 ```json
+200 OK
 {
-  "driver": {
-    "fullName": {
-      "firstName": "John",
-      "lastName": "Doe"
-    },
-    "email": "john.doe@example.com",
-    "vehicle": {
-      "color": "black",
-      "plate": "ABC123",
-      "capacity": 4,
-      "vehicleType": "car"
-    }
-  }
+  "driver": { /* driver details */ },
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Unauthorized Access
-
-**Status Code**: 401 Unauthorized
+**Unauthorized**
 
 ```json
+401 Unauthorized
 {
   "message": "Authentication required"
 }
 ```
 
-## Logout Driver
-
-Logout the currently authenticated driver and invalidate their token.
-
-### Endpoint
-
-```
-POST /api/v1/drivers/logout
-```
-
-### Headers Required
-
-```
-Authorization: Bearer JWT_TOKEN_STRING
-```
-
-### Success Response
-
-**Status Code**: 200 OK
+**Invalid Token**
 
 ```json
+401 Unauthorized
+{
+  "message": "Invalid token"
+}
+```
+
+### Notes
+
+- Requires a valid JWT token in the Authorization header
+- Password is automatically excluded from the response
+- The endpoint only returns the authenticated user's own profile
+
+---
+
+### 4. Driver Logout
+
+**Endpoint**  
+`GET /drivers/logout`
+
+**Headers**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Response**
+
+```json
+200 OK
 {
   "message": "Logout successful"
 }
 ```
 
-### Error Responses
+#### Error Responses
 
-#### Unauthorized Access
-
-**Status Code**: 401 Unauthorized
+**Unauthorized Access**
 
 ```json
+401 Unauthorized
+
 {
   "message": "Authentication required"
 }
 ```
 
-### Security Features
+---
 
-- Passwords are hashed using bcrypt before storage
-- JWT tokens are used for authentication
-- Passwords are never returned in responses
-- Tokens can be provided via HTTP-only cookies or Authorization header
-- Tokens are blacklisted on logout
-- Authentication middleware (authDriver) protects private routes
+**Security Implementation**
+
+- Token blacklisting
+- Cookie invalidation
+- Session termination
+
+---
+
+## Ride Management
+
+### 1. Create Ride Request
+
+**Endpoint**  
+`POST /rides`
+
+## Authentication
+
+**Header Format**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Parameters**  
+| Field | Validation |  
+|-------|------------|  
+| pickup | Valid address string |  
+| destination | Valid address string |  
+| vehicleType | car/motorcycle/auto |
+
+**Response**
+
+```json
+201 Created
+
+{
+  "user": "....",
+  "pickup": ".....",
+  "destination"":"....",
+  "fare": ....,
+    "status": "......",
+    "otp": "......",
+    "_id": ".......",
+}
+```
+
+#### Error Responses
+
+**Invalid Input**
+
+```json
+400 Bad Request
+
+{
+  "errors": [
+    {
+      "msg": "Invalid input",
+      "param": "pickup",
+      "location": "body"
+    }
+  ]
+}
+```
+
+### 2. Fare Estimation
+
+**Endpoint**  
+`GET /rides/fare?pickup=...&destination=...`
+
+**Response**
+
+```json
+200 OK
+{
+  "estimatedFare": 19.75,
+  "currency": "USD",
+  "distance": "2.3 km"
+}
+```
+
+---
+
+#### Error Responses
+
+**Invalid Input**
+
+```json
+400 Bad Request
+
+{
+  "errors": [
+    {
+      "msg": "Invalid location",
+      "param": "pickup",
+      "location": "query"
+    }
+  ]
+}
+```
+
+## Map Services
+
+### 1. Get Coordinates(Geocoding)
+
+**Endpoint**  
+`GET /map/coordinates?address=...`
+
+**Requirements**  
+| Field | Type | Allowed Values |  
+|-------|------|----------------|  
+| address| string |≥3 characters |
+
+**Response**
+
+```json
+200 OK
+{
+  "lat": 27.7172,
+  "lng": 85.3240
+}
+```
+
+#### Error Responses
+
+**Invalid Input**
+
+```json
+400 Bad Request
+
+{
+  "errors": [
+    {
+      "msg": "Invalid address",
+      "param": "address",
+      "location": "query"
+    }
+  ]
+}
+```
+
+#### Coordinates Not Found
+
+```json
+404 Not Found
+
+{
+  "message": "Coordinates not found"
+}
+```
+
+---
+
+### 2. Calculate Distance & Time
+
+**Endpoint**  
+`GET /map/get-distance-time`
+
+**Query Parameters**  
+| Parameter | Type | Constraints |  
+|-----------|------|-------------|  
+| origin | string | ≥3 characters |  
+| destination | string | ≥3 characters |
+
+**Headers**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Success Response**
+
+```json
+200 OK
+{
+  "distance": "4.2 km",
+  "duration": "12 mins"
+}
+```
+
+#### Error Responses
+
+**Invalid Locations**
+
+```json
+400 Bad Request
+{
+  "errors": [
+    {
+      "msg": "Invalid origin/destination",
+      "param": "origin",
+      "location": "query"
+    }
+  ]
+}
+```
+
+---
+
+### 3. Address Suggestions
+
+**Endpoint**  
+`GET /map/get-suggestions`
+
+**Query Parameters**  
+| Parameter | Type | Constraints |  
+|-----------|------|-------------|  
+| input | string | ≥3 characters |
+
+**Headers**
+
+```http
+Authorization: Bearer <JWT_TOKEN>
+```
+
+**Success Response**
+
+```json
+200 OK
+{
+  "suggestions": [
+    {
+      "address": "Times Square, Manhattan, NY",
+      "placeId": "ChIJmQJIxlVYwokR5EqrNDOX3d0"
+    }
+  ]
+}
+```
+
+#### Error Responses
+
+**Missing Query**
+
+```json
+400 Bad Request
+{
+  "message": "The 'input' query parameter is required."
+}
+```
+
+---
+
+**Common Status Codes**  
+| Code | Description |  
+|------|-------------|  
+| 200 | Successful request |  
+| 201 | Resource created |  
+| 400 | Invalid/missing input |  
+| 401 | Authentication failure |  
+| 404 | Resource not found |  
+| 429 | Rate limit exceeded |  
+| 500 | Server-side error |
