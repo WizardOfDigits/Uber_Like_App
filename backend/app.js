@@ -6,6 +6,8 @@ import connectToDb from "./db/db.js";
 import cors from "cors";
 import userRoutes from "./routes/user.routes.js";
 import driverRoutes from "./routes/driver.routes.js";
+import mapsRoutes from "./routes/maps.routes.js";
+import ridesRoutes from "./routes/rides.routes.js";
 
 const app = express();
 connectToDb();
@@ -23,5 +25,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/drivers", driverRoutes);
+app.use("/api/v1/maps", mapsRoutes);
+app.use("/api/v1/rides", ridesRoutes);
 
 export default app;
