@@ -1,29 +1,212 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import "remixicon/fonts/remixicon.css";
+import LocationSearchPanel from "../components/LocationSearchPanel";
+import VehiclePanel from "../components/VehiclePanel";
+import ConfirmRide from "../components/ConfirmRide";
+import LookingForDriver from "../components/LookingForDriver";
+import WaitingForDriver from "../components/WaitingForDriver.jsx";
 
 function Home() {
+  const [pickup, setPickup] = useState("");
+  const [destination, setDestination] = useState("");
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [vehiclePanel, setVehiclePanel] = useState(false);
+  const [confirmRidePanel, setConfirmRidePanel] = useState(false);
+  const [vehicleFound, setVehicleFound] = useState(false);
+  const [waitingForDriver, setWaitingForDriver] = useState(false);
+
+  const vehiclePanelRef = useRef(null);
+  const confirmRidePanelRef = useRef(null);
+  const panelRef = useRef(null);
+  const panelCloseRef = useRef(null);
+  const vehicleFoundRef = useRef(null);
+  const waitingForDriverRef = useRef(null);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+  };
+
+  useGSAP(
+    function () {
+      if (panelOpen) {
+        gsap.to(panelRef.current, {
+          height: "70%",
+          padding: 24,
+          // opacity:1
+        });
+        gsap.to(panelCloseRef.current, {
+          opacity: 1,
+        });
+      } else {
+        gsap.to(panelRef.current, {
+          height: "0%",
+          padding: 0,
+          // opacity:0
+        });
+        gsap.to(panelCloseRef.current, {
+          opacity: 0,
+        });
+      }
+    },
+    [panelOpen],
+  );
+
+  useGSAP(
+    function () {
+      if (vehiclePanel) {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehiclePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehiclePanel],
+  );
+
+  useGSAP(
+    function () {
+      if (confirmRidePanel) {
+        gsap.to(confirmRidePanelRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(confirmRidePanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confirmRidePanel],
+  );
+
+  useGSAP(
+    function () {
+      if (vehicleFound) {
+        gsap.to(vehicleFoundRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(vehicleFoundRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [vehicleFound],
+  );
+
+  useGSAP(
+    function () {
+      if (waitingForDriver) {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(0)",
+        });
+      } else {
+        gsap.to(waitingForDriverRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [waitingForDriver],
+  );
   return (
-    <div>
-      <div
-        className="h-screen pt-5 flex flex-col justify-end bg-cover bg-center relative"
-        style={{
-          backgroundImage: `url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F1.bp.blogspot.com%2F-natOQCwqNmI%2FXt4nHc8mgBI%2FAAAAAAAAHyo%2Fcf8Xw4XR7FkvKS4Q_v6dqje-2OTy10d4gCK4BGAsYHg%2Fs1920%2FAnime%252BSky%252BBackground%252B36.jpg&f=1&nofb=1&ipt=d796682978514872d65fcd53792aea89cb2c31022d3f523dfbc3d8aa55107dc2&ipo=images)`,
-        }}
-      >
+    <div className="h-screen relative overflow-hidden">
+      <img
+        className="w-16 absolute left-5 top-5"
+        src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png"
+        alt=""
+      />
+      <div className="h-screen w-screen">
+        {/* image for temporary use  */}
         <img
-          className="w-16 absolute left-5 top-5"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fclipartcraft.com%2Fimages%2Fuber-logo-png-white-7.png&f=1&nofb=1&ipt=95bd7e4dcc98971a1b0333b0527c8310fa5b45b7ae148d3411e8a7717f35807d&ipo=images"
+          className="h-full w-full object-cover"
+          src="https://i.pinimg.com/736x/f9/af/73/f9af73ea72f0f484bf2c9c00a7a1a1d2.jpg"
           alt=""
         />
-        <div className="bg-white pb-7 py-4 px-4">
-          <h2 className="text-3xl font-bold">Get Started with Uber</h2>
-          <Link
-            to="/login"
-            className="flex items-center justify-center w-full bg-black text-white py-3 rounded mt-5"
+      </div>
+      <div className=" flex flex-col justify-end h-screen absolute top-0 w-full">
+        <div className="h-[30%] p-6 bg-white relative">
+          <h5
+            ref={panelCloseRef}
+            onClick={() => {
+              setPanelOpen(false);
+            }}
+            className="absolute opacity-0 right-6 top-6 text-2xl"
           >
-            Continue
-          </Link>
+            <i className="ri-arrow-down-wide-line"></i>
+          </h5>
+          <h4 className="text-2xl font-semibold">Find a trip</h4>
+          <form
+            onSubmit={(e) => {
+              submitHandler(e);
+            }}
+          >
+            <input
+              onClick={() => {
+                setPanelOpen(true);
+              }}
+              value={pickup}
+              onChange={(e) => {
+                setPickup(e.target.value);
+              }}
+              className="bg-[#eee] px-12 py-2 text-lg rounded-lg w-full mt-5"
+              type="text"
+              placeholder="Add a pick-up location"
+            />
+            <input
+              onClick={() => {
+                setPanelOpen(true);
+              }}
+              value={destination}
+              onChange={(e) => {
+                setDestination(e.target.value);
+              }}
+              className="bg-[#eee] px-12 py-2 text-lg rounded-lg w-full  mt-3"
+              type="text"
+              placeholder="Enter your destination"
+            />
+          </form>
         </div>
+        <div ref={panelRef} className="bg-white h-0">
+          <LocationSearchPanel
+            setPanelOpen={setPanelOpen}
+            setVehiclePanel={setVehiclePanel}
+          />
+        </div>
+      </div>
+      <div
+        ref={vehiclePanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-10 pt-12"
+      >
+        <VehiclePanel
+          setConfirmRidePanel={setConfirmRidePanel}
+          setVehiclePanel={setVehiclePanel}
+        />
+      </div>
+      <div
+        ref={confirmRidePanelRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <ConfirmRide
+          setConfirmRidePanel={setConfirmRidePanel}
+          setVehicleFound={setVehicleFound}
+        />
+      </div>
+      <div
+        ref={vehicleFoundRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <LookingForDriver setVehicleFound={setVehicleFound} />
+      </div>
+
+      <div
+        ref={waitingForDriverRef}
+        className="fixed w-full z-10 bottom-0 translate-y-full bg-white px-3 py-6 pt-12"
+      >
+        <WaitingForDriver waitingForDriver={waitingForDriver} />
       </div>
     </div>
   );
