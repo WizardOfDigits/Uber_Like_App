@@ -60,7 +60,7 @@ function UserSignup() {
           <div className="flex gap-4 mb-6">
             <input
               required
-              className="bg-gray-200 rounded-lg px-4 py-2 w-1/2 text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+              className="text-black bg-gray-200 rounded-lg px-4 py-2 w-1/2 text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
               type="text"
               placeholder="First name"
               value={firstname}
@@ -68,7 +68,7 @@ function UserSignup() {
             />
             <input
               required
-              className="bg-gray-200 rounded-lg px-4 py-2 w-1/2 text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+              className="text-black bg-gray-200 rounded-lg px-4 py-2 w-1/2 text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
               type="text"
               placeholder="Last name"
               value={lastname}
@@ -81,7 +81,7 @@ function UserSignup() {
           </h3>
           <input
             required
-            className="bg-gray-200 mb-6 rounded-lg px-4 py-2 w-full text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+            className="text-black bg-gray-200 mb-6 rounded-lg px-4 py-2 w-full text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
             type="email"
             placeholder="email@example.com"
             value={email}
@@ -93,7 +93,7 @@ function UserSignup() {
           </h3>
           <input
             required
-            className="bg-gray-200 mb-6 rounded-lg px-4 py-2 w-full text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
+            className="text-black bg-gray-200 mb-6 rounded-lg px-4 py-2 w-full text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-black"
             type="password"
             placeholder="password"
             value={password}
