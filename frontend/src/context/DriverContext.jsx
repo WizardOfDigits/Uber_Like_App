@@ -1,6 +1,6 @@
 import { createContext, useState, useContext } from "react";
 export const DriverDataContext = createContext();
-const DriverContext = ({ children }) => {
+function DriverContext({ children }) {
   const [driver, setDriver] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -21,5 +21,5 @@ const DriverContext = ({ children }) => {
       {children}
     </DriverDataContext.Provider>
   );
-};
+}
 export default DriverContext;
