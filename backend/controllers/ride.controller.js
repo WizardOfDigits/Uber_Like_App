@@ -10,6 +10,7 @@ import {
   getDriversInRadiusService,
 } from "../services/maps.service.js";
 import rideModel from "../models/ride.model.js";
+import { sendMessageToSocketId } from "../socket.js";
 
 // get fare
 export const getFare = async (req, res) => {
