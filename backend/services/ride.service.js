@@ -1,6 +1,7 @@
 import rideModel from "../models/ride.model.js";
 import crypto from "crypto";
 import { getDistanceTimeService } from "../services/maps.service.js";
+import { sendMessageToSocketId } from "../socket.js";
 
 // get fare service
 export const getFareService = async (pickup, destination) => {
@@ -77,26 +78,33 @@ export const createRideService = async ({
 };
 
 // confirm ride service
-export const confirmRideService = async ({ rideId, otp }) => {
+export const confirmRideService = async ({ rideId, driver }) => {
   if (!rideId) {
     throw new Error("Ride id is required");
   }
-  await rideModel
-    .findOneAndUpdate(
-      {
-        _id: rideId,
-      },
-      {
-        status: "accepted",
-        driver: driver._id,
-      },
-    )
+
+  await rideModel.findOneAndUpdate(
+    {
+      _id: rideId,
+    },
+    {
+      status: "accepted",
+      driver: driver._id,
+    },
+  );
+
+  const ride = await rideModel
+    .findOne({
+      _id: rideId,
+    })
     .populate("user")
     .populate("driver")
     .select("+otp");
+
   if (!ride) {
-    throw new error("Ride not found");
+    throw new Error("Ride not found");
   }
+
   return ride;
 };
 
@@ -134,6 +142,11 @@ export const startRideService = async ({ rideId, otp, driver }) => {
       status: "ongoing",
     },
   );
+
+  sendMessageToSocketId(ride.user.socketId, {
+    event: "ride-started",
+    data: ride,
+  });
 
   return ride;
 };
