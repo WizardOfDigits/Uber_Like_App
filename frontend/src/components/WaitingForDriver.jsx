@@ -6,7 +6,7 @@ function WaitingForDriver(props) {
       <h5
         className="p-1 text-center w-[93%] absolute top-0"
         onClick={() => {
-          props.waitingForDriver(false);
+          props.setWaitingForDriver(false);
         }}
       >
         <i className="text-3xl text-gray-200 ri-arrow-down-wide-line"></i>
@@ -19,10 +19,14 @@ function WaitingForDriver(props) {
           alt=""
         />
         <div className="text-right">
-          <h2 className="text-lg font-medium capitalize">Testing Driver</h2>
-          <h4 className="text-xl font-semibold -mt-1 -mb-1">ABC-123A</h4>
+          <h2 className="text-lg font-medium capitalize">
+            {props.ride?.driver.fullname.firstname}
+          </h2>
+          <h4 className="text-xl font-semibold -mt-1 -mb-1">
+            {props.ride?.driver.vehicle.plate}
+          </h4>
           <p className="text-sm text-gray-600">Maruti Suzuki Alto</p>
-          <h1 className="text-lg font-semibold"> 123</h1>
+          <h1 className="text-lg font-semibold"> {props.ride?.otp} </h1>
         </div>
       </div>
 
@@ -33,7 +37,7 @@ function WaitingForDriver(props) {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                123 Sunshine Avenue, Green Valley, NY 10101
+                {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -42,15 +46,15 @@ function WaitingForDriver(props) {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-sm -mt-1 text-gray-600">
-                456 Ocean Drive, Sunset Beach, CA 90210
+                {props.ride?.destination}
               </p>
             </div>
           </div>
           <div className="flex items-center gap-5 p-3">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg font-medium">NRS.200.00 </h3>
-              <p className="text-sm -mt-1 text-gray-600">Cash on payment</p>
+              <h3 className="text-lg font-medium">₹{props.ride?.fare} </h3>
+              <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
             </div>
           </div>
         </div>
