@@ -58,7 +58,6 @@ const driverSchema = new mongoose.Schema({
       enum: ["car", "motorcycle", "auto"],
     },
   },
-
   location: {
     ltd: {
       type: Number,
