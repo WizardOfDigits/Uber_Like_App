@@ -25,7 +25,7 @@ function DriverSignup() {
     const driverData = {
       fullname: {
         firstname: firstName,
-        lastname: lastName,
+        lastname: lastName || "N/A",
       },
       email: email,
       password: password,
@@ -156,7 +156,7 @@ function DriverSignup() {
               placeholder="Vehicle Capacity"
               value={vehicleCapacity}
               onChange={(e) => {
-                setVehicleCapacity(e.target.value);
+                setVehicleCapacity(Number(e.target.value));
               }}
             />
             <select
@@ -172,7 +172,7 @@ function DriverSignup() {
               </option>
               <option value="car">Car</option>
               <option value="auto">Auto</option>
-              <option value="moto">Motorcycle</option>
+              <option value="motorcycle">Motorcycle</option>
             </select>
           </div>
 
