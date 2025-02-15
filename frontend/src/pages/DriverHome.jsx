@@ -9,6 +9,7 @@ import { useEffect, useContext } from "react";
 import { SocketContext } from "../context/SocketContext";
 import { DriverDataContext } from "../context/DriverContext";
 import axios from "axios";
+import LiveTracking from "../components/LiveTracking";
 
 function DriverHome() {
   const [ridePopupPanel, setRidePopupPanel] = useState(false);
@@ -115,10 +116,7 @@ function DriverHome() {
         </Link>
       </div>
       <div className="h-3/5">
-        <img
-          className="h-full w-full object-cover"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.wired.com%2Fphotos%2F59269cd37034dc5f91bec0f1%2Fmaster%2Fpass%2FGoogleMapTA.jpg&f=1&nofb=1&ipt=fb141eb91d172811edf4cddc79c241f36ce4875aa2f29433b1abb99810209b3e&ipo=images"
-        />
+        <LiveTracking />
       </div>
       <div className="h-2/5 p-6">
         <DriverDetails />

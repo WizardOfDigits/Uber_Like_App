@@ -1,6 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useContext } from "react";
+import { SocketContext } from "../context/SocketContext";
+import LiveTracking from "../components/LiveTracking";
+
 function Riding() {
+  const location = useLocation();
+  const { ride } = location.state || {};
+  const { socket } = useContext(SocketContext);
+  const navigate = useNavigate();
+
+  socket.on("ride-ended", () => {
+    navigate("/home");
+  });
   return (
     <div className="h-screen">
       <Link
@@ -10,11 +22,7 @@ function Riding() {
         <i className="text-lg font-medium ri-home-5-line"></i>
       </Link>
       <div className="h-1/2">
-        <img
-          className="h-full w-full object-cover"
-          src="https://i.pinimg.com/736x/f9/af/73/f9af73ea72f0f484bf2c9c00a7a1a1d2.jpg"
-          alt=""
-        />
+        <LiveTracking />
       </div>
       <div className="h-1/2 p-4">
         <div className="flex items-center justify-between">
@@ -24,8 +32,12 @@ function Riding() {
             alt=""
           />
           <div className="text-right">
-            <h2 className="text-lg font-medium">Sarthak</h2>
-            <h4 className="text-xl font-semibold -mt-1 -mb-1">MP04 AB 1234</h4>
+            <h2 className="text-lg font-medium capitalize">
+              {ride?.driver.fullname.firstname}
+            </h2>
+            <h4 className="text-xl font-semibold -mt-1 -mb-1">
+              {ride?.driver.vehicle.plate}
+            </h4>
             <p className="text-sm text-gray-600">Maruti Suzuki Alto</p>
           </div>
         </div>
@@ -35,13 +47,15 @@ function Riding() {
               <i className="text-lg ri-map-pin-2-fill"></i>
               <div>
                 <h3 className="text-lg font-medium">562/11-A</h3>
-                <p className="text-sm -mt-1 text-gray-600">Testing address</p>
+                <p className="text-sm -mt-1 text-gray-600">
+                  {ride?.destination}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-5 p-3">
               <i className="ri-currency-line"></i>
               <div>
-                <h3 className="text-lg font-medium">NRS.193.20 </h3>
+                <h3 className="text-lg font-medium">NRS.{ride?.fare}</h3>
                 <p className="text-sm -mt-1 text-gray-600">Cash Cash</p>
               </div>
             </div>

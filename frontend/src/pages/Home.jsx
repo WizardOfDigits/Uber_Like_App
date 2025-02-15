@@ -12,6 +12,7 @@ import { SocketContext } from "../context/SocketContext";
 import { useContext } from "react";
 import { UserDataContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import LiveTracking from "../components/LiveTracking.jsx";
 
 function Home() {
   const [vehiclePanel, setVehiclePanel] = useState(false);
@@ -224,10 +225,7 @@ function Home() {
       />
       <div className="h-screen w-screen">
         {/* temp image */}
-        <img
-          className="h-full w-full object-cover"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fmedia.wired.com%2Fphotos%2F59269cd37034dc5f91bec0f1%2Fmaster%2Fpass%2FGoogleMapTA.jpg&f=1&nofb=1&ipt=fb141eb91d172811edf4cddc79c241f36ce4875aa2f29433b1abb99810209b3e&ipo=images"
-        />
+        <LiveTracking />
       </div>
       <div className=" flex flex-col justify-end h-screen absolute top-0 w-full">
         <div className="h-[30%] p-6 bg-white relative">
