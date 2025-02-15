@@ -4,6 +4,7 @@ import {
   createRideService,
   getFareService,
   startRideService,
+  endRideService,
 } from "../services/ride.service.js";
 import {
   getAddressCoordinateService,
