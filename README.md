@@ -22,34 +22,15 @@ A full-stack ride-sharing application with real-time ride tracking, driver-user 
 
 ---
 
-## 📸 UI Screenshots
+# UI Screenshots
 
-<div style="display: flex; flex-wrap: wrap; gap: 20px;">
-  <div style="flex: 1; min-width: 250px;">
-    <h4>User Login</h4>
-    <img src=".screenshots/login.png" alt="Login" style="max-width: 100%; height: 470px;" />
-  </div>
-  <div style="flex: 1; min-width: 250px;">
-    <h4>User Signup</h4>
-    <img src=".screenshots/signup.png" alt="Signup" style="max-width: 100%; height: 470px;" />
-  </div>
-  <div style="flex: 1; min-width: 250px;">
-    <h4>Ride Booking</h4>
-    <img src=".screenshots/booking.png" alt="Booking" style="max-width: 100%; height: auto;" />
-  </div>
-      <div style="flex: 1; min-width: 250px;">
-    <h4>Active Ride (User)</h4>
-    <img src=".screenshots/riding.png" alt="Riding" style="max-width: 100%; height: auto;" />
-  </div>
-  <div style="flex: 1; min-width: 250px;">
-    <h4>Driver Home</h4>
-    <img src=".screenshots/driver-home.png" alt="Driver Home" style="max-width: 100%; height: auto;" />
-  </div>
-  <div style="flex: 1; min-width: 250px;">
-    <h4>Driver Ride Panel</h4>
-    <img src=".screenshots/driver-riding.png" alt="Driver Riding" style="max-width: 100%; height: auto;" />
-  </div>
-</div>
+| **User Login**                   | **User Signup**                    | **Ride Booking**                     |
+| -------------------------------- | ---------------------------------- | ------------------------------------ |
+| ![Login](.screenshots/login.png) | ![Signup](.screenshots/signup.png) | ![Booking](.screenshots/booking.png) |
+
+| **Active Ride (User)**             | **Driver Home**                              | **Driver Ride Panel**                            |
+| ---------------------------------- | -------------------------------------------- | ------------------------------------------------ |
+| ![Riding](.screenshots/riding.png) | ![Driver Home](.screenshots/driver-home.png) | ![Driver Riding](.screenshots/driver-riding.png) |
 
 ## ✨ Key Features
 
